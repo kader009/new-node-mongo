@@ -18,7 +18,6 @@ const createUser = async (req: Request, res: Response) => {
 
 const GetUser = async (req: Request, res: Response) => {
   try {
-    // const user = req.body;
     const result = await UserModel.find({}, `username fullName age email address`);
     res.status(200).json({
       success: true,
@@ -30,11 +29,24 @@ const GetUser = async (req: Request, res: Response) => {
   }
 };
 
+const PutUser = async (req: Request, res: Response) => {
+  try {
+    const result = await UserModel.find({}, `username fullName age email address`);
+    res.status(200).json({
+      success: true,
+      message: 'User updated successfully!',
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
 
 
 export const UserController = {
   createUser,
-  GetUser
+  GetUser,
+  PutUser
 };
