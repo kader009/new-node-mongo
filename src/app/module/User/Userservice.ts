@@ -11,8 +11,14 @@ const GetUserDB = async (user: TUser) => {
   return getResult;
 };
 
+const PutUserDB = async (userId: string) => {
+  const getResult = await UserModel.findById(userId);
+  return getResult;
+};
+
 
 export const UserServices = {
   createUserDB,
-  GetUserDB
+  GetUserDB,
+  PutUserDB
 };

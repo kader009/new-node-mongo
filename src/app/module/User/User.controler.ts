@@ -30,8 +30,10 @@ const GetUser = async (req: Request, res: Response) => {
 };
 
 const PutUser = async (req: Request, res: Response) => {
+  const userId = req.params.userId;
   try {
-    const result = await UserModel.find({}, `username fullName age email address`);
+    const newUser = req.body;
+    const result = await UserServices.PutUserDB(userId);
     res.status(200).json({
       success: true,
       message: 'User updated successfully!',
@@ -39,6 +41,16 @@ const PutUser = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json(
+      {
+        "success": false,
+        "message": "User not found",
+        "error": {
+            "code": 404,
+            "description": "User not found!"
+        }
+    }
+    )
   }
 };
 
