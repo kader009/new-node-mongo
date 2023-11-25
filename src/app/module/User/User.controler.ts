@@ -18,7 +18,10 @@ const createUser = async (req: Request, res: Response) => {
 
 const GetUser = async (req: Request, res: Response) => {
   try {
-    const result = await UserModel.find({}, `username fullName age email address`);
+    const result = await UserModel.find(
+      {},
+      `username fullName age email address`,
+    );
     res.status(200).json({
       success: true,
       message: 'User fetched successfully!',
@@ -34,6 +37,11 @@ const PutUser = async (req: Request, res: Response) => {
   try {
     const newUser = req.body;
     const result = await UserServices.PutUserDB(userId);
+
+    if (!newUser) {
+      return null;
+    }
+
     res.status(200).json({
       success: true,
       message: 'User updated successfully!',
@@ -41,24 +49,19 @@ const PutUser = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json(
-      {
-        "success": false,
-        "message": "User not found",
-        "error": {
-            "code": 404,
-            "description": "User not found!"
-        }
-    }
-    )
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
   }
 };
-
-
-
 
 export const UserController = {
   createUser,
   GetUser,
-  PutUser
+  PutUser,
 };
